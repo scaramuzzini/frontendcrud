@@ -5,6 +5,7 @@ import UserForm from "./UserForm";
 
 const UserList = () => {
     const [users,setUsers] = useState([]);
+    const [userToEdit, setUserToEdit] = useState(null);
 
     const fetchUsers = async () => {
         try {
@@ -28,14 +29,21 @@ const UserList = () => {
         }
     };
 
+
+    const handleEdit = (user) => {
+        setUserToEdit(user);
+    }
+
+
     return (
         <>
             <h1>Lista de Usuários</h1>
-            <UserForm fetchUsers={fetchUsers} />
+            <UserForm fetchUsers={fetchUsers} userToEdit={userToEdit} setUserToEdit={setUserToEdit}/>
             <ul>
                 {users.map(user => (
                     <li key={user.id}>
                         {user.name} - {user.email}
+                        <button onClick={() => handleEdit(user)}>Editar</button>
                         <button onClick={() => handleDelete(user.id)}>Excluir</button>
                     </li>
                 ))}
