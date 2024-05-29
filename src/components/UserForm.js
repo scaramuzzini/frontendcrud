@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 
-const UserForm = ({ fetchUsers, userToEdit, setUserToEdit }) => {
+const UserForm = ({ fetchUsers, userToEdit, setUserToEdit, addUser }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
@@ -21,13 +21,15 @@ const UserForm = ({ fetchUsers, userToEdit, setUserToEdit }) => {
                     email: email
                 });
                 setUserToEdit(null);
-            } else {
-                await api.post('/users', {
+            } else { //only new users
+                const response = await api.post('/users', {
                     name: name,
                     email: email
                 });
+                //Como a API não salva o usuário, adicionamos o novo usuário a lista
+                addUser(response.data);
             }
-            fetchUsers();
+            //fetchUsers();
             setName('');
             setEmail('');
         } catch (error) {
