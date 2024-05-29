@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import UserForm from "./UserForm";
 
 
 const UserList = () => {
@@ -30,6 +31,7 @@ const UserList = () => {
     return (
         <>
             <h1>Lista de Usuários</h1>
+            <UserForm fetchUsers={fetchUsers} />
             <ul>
                 {users.map(user => (
                     <li key={user.id}>
